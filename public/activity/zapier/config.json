@@ -21,7 +21,7 @@
                 }							
 			],
             "outArguments": [],			
-			"url": "https://YOUR_URL/zapier/execute",
+			"url": "https://dataretrieve.herokuapp.com/zapier/execute",
             "verb": "POST",
             "body": "",
             "header": "",
@@ -31,32 +31,32 @@
         }
     },
     "configurationArguments": {
-    	"applicationExtensionKey": "YOUR_APPLICATION_KEY_IN_APP_CENTER",
+    	"applicationExtensionKey": "6c225efe-4b7c-4b12-9ff9-196e5f0acd1b",
         "defaults": { 
             "method": "POST",
             "format": "JSON" 
         },             
         "save": {
-        	"url": "https://YOUR_URL/zapier/save/",
+        	"url": "https://dataretrieve.herokuapp.com/zapier/save/",
             "body": "",
             "verb": "POST",
             "useJwt": false
         },
         "publish": {
-        	"url": "https://YOUR_URL/zapier/publish/",
+        	"url": "https://dataretrieve.herokuapp.com/zapier/publish/",
             "verb": "POST",
             "body": "",
             "useJwt": false
         },
         "validate": {
-        	"url": "https://YOUR_URL/zapier/validate/",
+        	"url": "https://dataretrieve.herokuapp.com/zapier/validate/",
             "verb": "POST",
             "body": "",
             "useJwt": false            
         }
     },
     "edit": {
-    	"url": "https://YOUR_URL/activity/zapier/",
+    	"url": "https://dataretrieve.herokuapp.com/activity/zapier/",
         "height": 400,
         "width": 500
     }

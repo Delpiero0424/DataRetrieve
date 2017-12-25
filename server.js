@@ -13,6 +13,34 @@ var zapier = require("./routes/zapier");
 
 var app = express();
 
+// Register configs for the environments where the app functions
+// , these can be stored in a separate file using a module like config
+
+var APIKeys = {
+    appId           : '6c225efe-4b7c-4b12-9ff9-196e5f0acd1b',
+    clientId        : '5u6fn7eblat6hpucl3v63miz',
+    clientSecret    : 'wLEeIcqKoT5KgI16LXJ9xmhG',
+    appSignature    : '7GXqYpUGkTSY1KZr3iXExTZDzDuwagKReXn51hnWdzmf4GjgtwxxYIPfH1Pucu4i15OLi9ZlnktCVKh6osdyL3T5yRaDEnmhkfkFHk6l4TqxoCutNF3ZDHmiDCLQnr3kOZehR4oMMf6MPesNi0_rVW-oB_zLUOkrEPpmrIjCpaUFYlT615xLKtYpar_3OgXGAn_RsrAYXgeebuqydKtWqHbyR4G9MFQ3j2XLTM6a1lQJi6Uwwwjsg5RqXHZu_A2',
+    authUrl         : 'https://auth.exacttargetapis.com/v1/requestToken?legacy=1'
+};
+
+// Simple custom middleware
+function tokenFromJWT( req, res, next ) {
+    // Setup the signature for decoding the JWT
+    var jwt = new JWT({appSignature: APIKeys.appSignature});
+    
+    // Object representing the data in the JWT
+    var jwtData = jwt.decode( req );
+
+    // Bolt the data we need to make this call onto the session.
+    // Since the UI for this app is only used as a management console,
+    // we can get away with this. Otherwise, you should use a
+    // persistent storage system and manage tokens properly with
+    // node-fuel
+    req.session.token = jwtData.token;
+    next();
+}
+
 // app configuration
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -55,6 +83,11 @@ if (config.get("env") === "development") {
 		}
 	});
 }
+
+// HubExchange Routes
+app.get('/', routes.index );
+app.post('/login', tokenFromJWT, routes.login );
+app.post('/logout', routes.logout );
 
 // production error handler
 app.use(function(err, req, res, next) {
